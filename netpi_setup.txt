@@ -1,5 +1,4 @@
 # RaspberryPi setup for use as a 'NetPi' Network Analyzer
-per Ron Miller Aug 2018
 # -------------------------------------------------------
 sudo apt-get update
 sudo apt-get install cdpr dia ethtool iperf lighttpd lldpd speedtest-cli tightvncserver wireshark zenmap
@@ -18,7 +17,9 @@ leafpad .profile   #add: xhost + and export DISPLAY=:0.0
 # fetch a clone copy of the NetPi project
 git clone https://github.com/chrisli-m/NetPi.git
 
-# setup files in the http server root directory
+# 'Copy' the files so changes on working files can be done on a whim,
+# while keeping the clone files as unchanged backups.
+# Setup files in the http server root directory
 sudo cp -r NetPi/www/* /var/www/html/
 sudo chown -R www-data:www-data /var/www/html/*
 find /var/www/html/ -type f -exec chmod 664 -- {} +

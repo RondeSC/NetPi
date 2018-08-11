@@ -12,7 +12,7 @@ service lighttpd force-reload
 
 # config pi user and environment
 sudo usermod -a -G www-data pi 
-leafpad .profile   #add: xhost + and export DISPLAY=:0.0
+nano .profile   #add: xhost + and export DISPLAY=:0.0
 
 # fetch a clone copy of the NetPi project
 git clone https://github.com/chrisli-m/NetPi.git

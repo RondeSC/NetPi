@@ -1,0 +1,55 @@
+# RaspberryPi setup for use as a 'NetPi' Network Analyzer
+per Ron Miller Aug 2018
+# -------------------------------------------------------
+sudo apt-get update
+sudo apt-get install cdpr dia ethtool iperf lighttpd lldpd speedtest-cli tightvncserver wireshark zenmap
+sudo apt-get install php7.0 php7.0-cgi php7.0-common
+
+# configure http server
+sudo lighty-enable-mod fastcgi-php
+sudo lighty-enable-mod cgi
+# needed?: sudo lighty-enable-mod userdir
+service lighttpd force-reload
+
+# config pi user and environment
+sudo usermod -a -G www-data pi 
+leafpad .profile   #add: xhost + and export DISPLAY=:0.0
+
+# fetch a clone copy of the NetPi project
+git clone https://github.com/chrisli-m/NetPi.git
+
+# setup files in the http server root directory
+sudo cp -r NetPi/www/* /var/www/html/
+sudo chown -R www-data:www-data /var/www/html/*
+find /var/www/html/ -type f -exec chmod 664 -- {} +
+chmod 775 /var/www/html/*.sh
+chmod 775 /var/www/html/*/*.sh
+chmod 775 /var/www/html/*/*/*.sh
+
+# setup scripts in /nettools
+sudo mkdir /nettools
+sudo mkdir /nettools/NetPi
+sudo chown www-data:www-data /nettools/NetPi
+sudo chmod 775 /nettools/NetPi
+cp -r  NetPi/scripts /nettools/NetPi
+sudo chmod -R 775 /nettools/NetPi/
+cp -r  NetPi/wallpaper /nettools/NetPi
+sudo ln -s /nettools/NetPi /opt/netpi
+
+# setup for logging files
+sudo mkdir /var/log/netpi
+sudo chmod 777 /var/log/netpi
+sudo mkdir /var/log/netpi/cdp
+sudo chmod 777 /var/log/netpi/cdp
+sudo mkdir /var/log/netpi/lldp
+sudo chmod 777 /var/log/netpi/lldp
+
+# allow permissive use/access of these used utilities
+# this theoretically could pose some security risks !?
+sudo chmod 4775 /sbin/wpa_cli
+sudo chmod 4775 /usr/sbin/lldpcli
+sudo chmod 4775 /usr/sbin/lldpctl
+sudo chmod 4775 /usr/sbin/cdpr
+
+#Now with the browser go to 'localhost'
+# or from the cli run: /nettools/NetPi/scripts/controls/stealth.sh

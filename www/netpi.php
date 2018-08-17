@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
 //////////////////////////////////////////////////////////////////
 // Global configuration vars are set here
@@ -10,17 +12,20 @@ global $script_path, $log_path;
 
 // used by main pages to invoke tests
 function run_func($func) {
+  // Work-Around, the next line should not be needed
+  $script_path = "/nettools/NetPi/scripts";
+
     if($func == "draw") {
         // stealth
-        exec("dia &");
+        exec("export DISPLAY=':0.0'; dia &");
     }
     elseif($func == "notepad") {
         // active, pentest, stealth
-        exec("$script_path/notepad.sh");
+        echo (exec("export DISPLAY=':0.0'; $script_path/notepad.sh"));
     }
     elseif($func == "zenmap") {
         // pentest
-        exec("$script_path/zenmap.sh");
+        exec("export DISPLAY=':0.0'; $script_path/zenmap.sh");
     }
     elseif($func == "pentest") {
         exec("$script_path/netmode.sh pentest");

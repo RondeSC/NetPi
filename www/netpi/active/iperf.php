@@ -99,8 +99,8 @@ body {
     <td>
           <table width="100%" border="0">
         <tr>
-          <td><b>iPerf Server Address:</b>
-<input type="text" id="ipbox" name="ip" value="192.168.0.107" maxlength="15" class="display" readonly="readonly" />
+          <td><b><big>iPerf Server</big> Address:</b>
+<input type="text" id="ipbox" name="ip" value="iperf.he.net" maxlength="15" class="display" readonly="readonly" />
 		  </td>
         </tr>
         <tr>

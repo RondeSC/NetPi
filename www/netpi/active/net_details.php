@@ -15,14 +15,14 @@ body {
 <div align="center">
   <p><a href="index.php"><img src="img/header.png" /></a></a>
   </p>
-  <table width="350" border="0">
+  <table width="390" border="0">
     <tr>
     <td width="87"><img src="img/eth0.png" width="85" height="55" /></td>
-    <td width="329"><b><?PHP echo shell_exec('/sbin/ifconfig eth0 | grep "inet addr:"'); ?></b></td>
+    <td width="369"><b><?PHP echo nl2br(shell_exec('/sbin/ifconfig eth0 2>&1| grep -E "inet |eth0"')); ?></b></td>
   </tr>
   <tr>
     <td><img src="img/wlan0.png" width="85" height="55" /></td>
-    <td><b><?PHP echo shell_exec('/sbin/ifconfig wlan0 | grep "inet addr:"'); ?></b></td>
+    <td><b><?PHP echo nl2br(shell_exec('/sbin/ifconfig wlan0 2>&1| grep -E "inet |wlan0"')); ?></b></td>
   </tr>
 </table>
   <a href="index.php"><img src="img/menu.png" width="142" height="27" /></a><a href="externalip.php"><img src="img/external.png" width="142" height="27" /></a><br />

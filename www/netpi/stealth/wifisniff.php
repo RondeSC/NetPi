@@ -19,7 +19,8 @@ body {
   <br />
   <br />
   <?PHP 
-  $ifconfig = shell_exec('sudo iwlist wlan0 scan');
+//  $ifconfig = shell_exec('sudo iwlist wlan0 scan');
+  $ifconfig = shell_exec('iwlist wlan0 scan 2>&1');
   echo nl2br ($ifconfig);
    ?>
 </div>

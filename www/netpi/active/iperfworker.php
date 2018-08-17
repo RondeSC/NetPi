@@ -28,7 +28,7 @@ body {
   <tr>
     <td width="100%"><b>
 	<?PHP 
-	$iperf = shell_exec('iperf -c '.escapeshellarg($_POST["ip"]));
+	$iperf = shell_exec('iperf -c ' . escapeshellarg($_POST["ip"]) . ' 2>&1');
 	echo nl2br($iperf);
 	 ?>
      </b>

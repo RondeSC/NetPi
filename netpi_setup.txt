@@ -10,9 +10,10 @@ sudo lighty-enable-mod cgi
 # needed?: sudo lighty-enable-mod userdir
 service lighttpd force-reload
 
+cd ~	# every command going forward is done assuming this pwd
 # config pi user and environment
 sudo usermod -a -G www-data pi 
-nano .profile   #add: xhost + and export DISPLAY=:0.0
+nano .profile   #add: 'xhost +' and 'export DISPLAY=:0.0'
 
 # fetch a clone copy of the NetPi project
 git clone https://github.com/chrisli-m/NetPi.git

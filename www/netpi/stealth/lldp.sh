@@ -2,7 +2,7 @@
 
 echo Waiting for LLDP Packet
 dtstamp=$(date +"%m-%d-%Y--%H%M%S")
-logfile=/var/log/netpi/lldp-report-$dtstamp.txt
+logfile=/var/log/netpi/lldp/report-$dtstamp.txt
 flag=true
 touch $logfile
 sudo service lldpd restart

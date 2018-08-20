@@ -2,6 +2,7 @@
 # -------------------------------------------------------
 sudo apt-get update
 sudo apt-get install cdpr dia ethtool iperf lighttpd lldpd speedtest-cli tightvncserver wireshark zenmap
+sudo apt-get install matchbox-keyboard
 sudo apt-get install php7.0 php7.0-cgi php7.0-common
 
 # configure http server
@@ -12,8 +13,10 @@ service lighttpd force-reload
 
 cd ~	# every command going forward is done assuming this pwd
 # config pi user and environment
-sudo usermod -a -G www-data pi 
+sudo usermod -a -G www-data pi
+sudo usermod -a -G wireshark pi
 nano .profile   #add: 'xhost +' and 'export DISPLAY=:0.0'
+sudo dpkg-reconfigure wireshark-common  # select Yes
 
 # fetch a clone copy of the NetPi project
 git clone https://github.com/chrisli-m/NetPi.git

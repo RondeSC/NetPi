@@ -17,7 +17,7 @@ body {
 <body>
 <div align="center"><a href="index.php"><img src="img/header.png" /></a>
   <br />
-<table width="400" border="0">
+<table width="410" border="0">
   <tr>
     <td width="100%">
 <?PHP
@@ -36,26 +36,21 @@ while (false !== ($entry = $d->read())) {
   }
 }
 
-$readfile = "$path/$latest_filename";
-$file = $readfile;
+$filename = "$path/$latest_filename";
 
-$result = fopen($file, "r") or die("Unable to open file!");
+$result_file = fopen($filename, "r") or die("Unable to open file!");
 // Output one line until end-of-file
-while(!feof($result)) {
-  echo fgets($result) . "<br>";
+while(!feof($result_file)) {
+  echo fgets($result_file) . "<br>";
 }
-fclose($myfile);
+fclose($result_file);
 
 
 ?>
     </td>
   </tr>
-  <tr>
-    <td>
-      <p><b>Filename: <?PHP echo $file; ?></b></br>
-    </td>
-  </tr>
 </table>
+  <b>Filename: <?PHP echo $filename; ?></b>
   <br />
   <br />
   <a href="http://127.0.0.2/netpi/stealth/index.php"><img src="img/back.png" border="0" /></a><br />

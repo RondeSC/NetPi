@@ -20,13 +20,12 @@ body {
     <br />
     <br />
     </p>
-  <b><p>Waiting for LLDP Packet<br />
-    This may take up to 30 seconds.<br />
-    Please wait!
+  <b><p>Processing LLDP Packet reporting<br />
   </p></b>
   <p>
   <?php
-  $cmd = 'bash -x lldp.sh';
+//  $cmd = 'bash -x lldp.sh';
+  $cmd = 'bash lldp.sh 2>&1';
   //echo "<pre>$output</pre>";
  
 while (@ ob_end_flush()); // end all output buffers if any
@@ -40,7 +39,14 @@ while (!feof($proc))
 }
 echo '</pre>';
 ?>
-<script>location.href='lldpresult.php'</script>.
+
+<script>
+  window.onload = function(){ setTimeout( function(){
+    //alert("Ready to see results ?");
+    location.href='lldpresult.php'
+  }, 2000); };
+</script>
+
 </p>
   <p><br />
     <a href="http://127.0.0.2/netpi/stealth/index.php?function=pentest"><img src="img/mode.png" border="0" /></a><a href="http://127.0.0.2/netpi/stealth/index.php?function=active"><img src="img/active.png" border="0" /></a><a href="http://127.0.0.2/netpi/stealth/index.php?function=power"><img src="img/power.png" border="0" /></a></p>

@@ -20,13 +20,12 @@ body {
     <br />
     <br />
     </p>
-  <b><p>Waiting for CDP Packet<br />
-    Please wait!
+  <b><p>Processing CDP Packet data ...<br />
   </p></b>
   <p>
   <?php
 //  $cmd = 'sudo bash -x cdp.sh';
-  $cmd = 'bash -x cdp.sh';
+  $cmd = 'bash cdp.sh 2>&1';
   //echo "<pre>$output</pre>";
  
 while (@ ob_end_flush()); // end all output buffers if any
@@ -40,7 +39,14 @@ while (!feof($proc))
 }
 echo '</pre>';
 ?>
-<script>location.href='cdpresult.php'</script>.
+
+<script>
+  window.onload = function(){ setTimeout( function(){
+    //alert("Ready to see results ?");
+    location.href='cdpresult.php';
+  }, 2000); };
+</script>
+
 </p>
   <p><br />
     <a href="http://127.0.0.2/netpi/stealth/index.php?function=pentest"><img src="img/mode.png" border="0" /></a><a href="http://127.0.0.2/netpi/stealth/index.php?function=active"><img src="img/active.png" border="0" /></a><a href="http://127.0.0.2/netpi/stealth/index.php?function=power"><img src="img/power.png" border="0" /></a></p>

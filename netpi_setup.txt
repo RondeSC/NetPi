@@ -1,41 +1,64 @@
 # RaspberryPi setup for use as a 'NetPi' Network Analyzer
 # -------------------------------------------------------
 sudo apt-get update
-sudo apt-get install cdpr dia ethtool iperf lighttpd lldpd speedtest-cli tightvncserver wireshark zenmap
-sudo apt-get install php7.0 php7.0-cgi php7.0-common
+sudo apt-get install lighttpd php7.0 php7.0-cgi php7.0-common
+sudo apt-get install cdpr dia ethtool iperf lldpd speedtest-cli  zenmap
+sudo apt-get install matchbox-keyboard
+# during next install, when asked select '<Yes>' or do so later: sudo dpkg-reconfigure wireshark-common
+sudo apt-get install wireshark
 
 # configure http server
+# --------------------------
+sudo chown www-data:www-data /var/www
 sudo lighty-enable-mod fastcgi-php
 sudo lighty-enable-mod cgi
-# needed?: sudo lighty-enable-mod userdir
-service lighttpd force-reload
+sudo lighty-enable-mod simple-vhost
+sudo service lighttpd force-reload
+
+# add lines to the end of 10-simple-vhost.conf, as given below
+sudo nano /etc/lighttpd/conf-enabled/10-simple-vhost.conf
+#NetPi
+$SERVER["socket"] == "127.0.0.2:80" {
+server.document-root = "/opt/NetPi/www/"
+server.errorlog = "/var/log/netpi/error.log"
+}
+
+# add line, as appropriate, to lighttpd.conf
+sudo nano  /etc/lighttpd/lighttpd.conf
+server.bind                 = "127.0.0.1"
+
+sudo service lighttpd force-reload
+
+cd ~	# every command going forward is done assuming this pwd
 
 # config pi user and environment
-sudo usermod -a -G www-data pi 
-nano .profile   #add: xhost + and export DISPLAY=:0.0
+# -----------------------------------
+sudo usermod -a -G www-data pi	# allows you to modify www files
+sudo usermod -a -G wireshark pi
+sudo nano .profile  #add next two lines
+  xhost +
+  export DISPLAY=':0.0'
 
-# fetch a clone copy of the NetPi project
-git clone https://github.com/chrisli-m/NetPi.git
+# setup NetPi files
+# -----------------------------------
+#  Fetch a clone copy of the NetPi project
+#  The next few commands varry due to where&how you get the project files
+#  the results should be the project source files in ~pi/NetPi
+#git clone https://github.com/chrisli-m/NetPi.git
+wget https://github.com/RondeSC/NetPi/archive/dev_branch.zip	# or other latest
+unzip <repo branch zip filename>   # as that downloaded
+mv <NetPi-branchname> NetPi        # rename dir, resulting from unzipped file
 
 # 'Copy' the files so changes on working files can be done on a whim,
 # while keeping the clone files as unchanged backups.
 # Setup files in the http server root directory
-sudo cp -r NetPi/www/* /var/www/html/
-sudo chown -R www-data:www-data /var/www/html/*
-find /var/www/html/ -type f -exec chmod 664 -- {} +
-chmod 775 /var/www/html/*.sh
-chmod 775 /var/www/html/*/*.sh
-chmod 775 /var/www/html/*/*/*.sh
-
-# setup scripts in /nettools
-sudo mkdir /nettools
-sudo mkdir /nettools/NetPi
-sudo chown www-data:www-data /nettools/NetPi
-sudo chmod 775 /nettools/NetPi
-cp -r  NetPi/scripts /nettools/NetPi
-sudo chmod -R 775 /nettools/NetPi/
-cp -r  NetPi/wallpaper /nettools/NetPi
-sudo ln -s /nettools/NetPi /opt/netpi
+sudo cp -r NetPi /opt/
+sudo chown -R www-data:www-data /opt/NetPi
+sudo chmod 775 /opt/NetPi
+sudo chmod 775 /opt/NetPi/*
+sudo find /opt/NetPi -type f -exec chmod 664 -- {} +
+sudo chmod 775 /opt/NetPi/scripts/*.sh
+sudo chmod 775 /opt/NetPi/scripts/*/*.sh
 
 # setup for logging files
 sudo mkdir /var/log/netpi
@@ -45,6 +68,10 @@ sudo chmod 777 /var/log/netpi/cdp
 sudo mkdir /var/log/netpi/lldp
 sudo chmod 777 /var/log/netpi/lldp
 
+# enable some privileged access
+# ----------------------------------
+sudo groupadd -r autologin	# these two did not seems to do the job
+sudo gpasswd -a pi autologin	# so the following chmod 4775 commands were done
 # allow permissive use/access of these used utilities
 # this theoretically could pose some security risks !?
 sudo chmod 4775 /sbin/wpa_cli
@@ -52,5 +79,7 @@ sudo chmod 4775 /usr/sbin/lldpcli
 sudo chmod 4775 /usr/sbin/lldpctl
 sudo chmod 4775 /usr/sbin/cdpr
 
-#Now with the browser go to 'localhost'
-# or from the cli run: /nettools/NetPi/scripts/controls/stealth.sh
+sudo reboot now
+
+#Now with the browser go to '127.0.0.2'
+# or from the cli run: /opt/NetPi/scripts/controls/stealth.sh&

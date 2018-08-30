@@ -44,7 +44,7 @@ echo '</pre>';
   window.onload = function(){ setTimeout( function(){
     //alert("Ready to see results ?");
     location.href='lldpresult.php'
-  }, 2000); };
+  }, 300); };
 </script>
 
 </p>

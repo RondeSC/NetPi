@@ -1,2 +1,2 @@
-/opt/netpi/scripts/netmode.sh stealth &
+/opt/NetPi/scripts/netmode.sh stealth &
 exit

@@ -16,20 +16,20 @@ if [ $1 = "stealth" ]; then
 	sudo iptables -A OUTPUT -o eth0 -j DROP
 	sudo service lldpd stop
 	sudo pkill dhcli
-	pcmanfm --set-wallpaper=/opt/netpi/wallpaper/analyzestealthwallpaper.jpg --wallpaper-mode=fit
+	pcmanfm --set-wallpaper=/opt/NetPi/wallpaper/analyzestealthwallpaper.jpg --wallpaper-mode=fit
 elif [ $1 = "active" ]; then
 	## Allow all outgoing traffic on eth0
 	echo "Going hot! talking on the net..."
 	sudo iptables -D OUTPUT -o eth0 -j DROP
 	sudo service lldpd restart &
 	sudo dhclient eth0 &
-	pcmanfm --set-wallpaper=/opt/netpi/wallpaper/analyzeactivewallpaper.jpg --wallpaper-mode=fit
+	pcmanfm --set-wallpaper=/opt/NetPi/wallpaper/analyzeactivewallpaper.jpg --wallpaper-mode=fit
 	#ToDo Here - load pen test toolset application. Update this...
 elif [ $1 = "pentest" ]; then
 	## Oh boy... heading to the dark side...
 	echo "Switching to Pen Test software load..."
 	sudo service lldpd start
-	pcmanfm --set-wallpaper=/opt/netpi/wallpaper/pentestwallpaper.jpg --wallpaper-mode=fit
+	pcmanfm --set-wallpaper=/opt/NetPi/wallpaper/pentestwallpaper.jpg --wallpaper-mode=fit
 else
 	echo "Unknown or Undefined Action. Blocking Traffic out to be safe..."
 	sudo iptables -A OUTPUT -o eth0 -j DROP

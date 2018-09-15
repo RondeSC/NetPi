@@ -1,0 +1,14 @@
+
+
+-------- desireable actions, yet to be accomblished
+-To auto start up lldpd with the -r option. Neither the pre-setup at OS startup action nor 'service lldpd start' seems to support it.
+  Prehaps something like "sudo lldpd -r &" should be in .bash.rc or .profile
+-Yet to log 'speed tests'
+
+
+-------- Odd behavior
+-When the likes of 'RUN-ACTIVE' are placed on the desktop they can not be run from the desktop GUI even thou there mode is: rwxr-xr-x
+  I had to rename them as .sh files in order to launch them from the desktop.
+-When 'lldp-info' runs and the lldpd daemon is not present and this executes: gksu -u pi "sudo lldpd -r &"
+  A password for 'root' is asked for, It should be asking for 'pi's password. I however does except the pi PW
+
